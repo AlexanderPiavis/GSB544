@@ -1,0 +1,324 @@
+---
+title: "Lab 2"
+format: html
+---
+
+```{python}
+import pandas as pd
+```
+
+```{python}
+avocado_original = pd.read_csv("avocado-updated-2020.csv")
+avocado = avocado_original
+avocado.head()
+```
+1) The dataset contains multiple obervations of avocados. Including the average price of one avocado, total volume, Total number of avocados with PLU 4225 sold, Total number of avocados with PLU 4770 sold, number of bags including small, large, and extra large bags, type of bag, year, and the geography of the avocados. 
+
+```{python}
+avocado['geography'] = avocado['geography'].astype('category')
+```
+```{python}
+avocado["geography"].unique()
+```
+```{python}
+avocado['geography'] = avocado['geography'].replace({
+    'Albany': 'Northeast',
+    'Atlanta': 'Southeast',
+    'Baltimore/Washington': 'Southeast',
+    'Boise': 'West',
+    'Boston': 'Northeast',
+    'Buffalo/Rochester': 'Northeast',
+    'California': 'West',
+    'Charlotte': 'Southeast',
+    'Chicago': 'Plains',
+    'Cincinnati/Dayton': 'Midsouth',
+    'Columbus': 'Midsouth',
+    'Dallas/Ft. Worth': 'South Central',
+    'Denver': 'West',
+    'Detroit': 'Plains',
+    'Grand Rapids': 'Plains',
+    'Great Lakes': 'Plains',
+    'Harrisburg/Scranton': 'Northeast',
+    'Hartford/Springfield': 'Northeast',
+    'Houston': 'South Central',
+    'Indianapolis': 'Midsouth',
+    'Jacksonville': 'Southeast',
+    'Las Vegas': 'West',
+    'Los Angeles': 'West',
+    'Louisville': 'Midsouth',
+    'Miami/Ft. Lauderdale': 'Southeast',
+    'Midsouth': 'Midsouth',
+    'Nashville': 'Midsouth',
+    'New Orleans/Mobile': 'South Central',
+    'New York': 'Northeast',
+    'Northeast': 'Northeast',
+    'Northern New England': 'Northeast',
+    'Orlando': 'Southeast',
+    'Philadelphia': 'Northeast',
+    'Phoenix/Tucson': 'West',
+    'Pittsburgh': 'Northeast',
+    'Plains': 'Plains',
+    'Portland': 'West',
+    'Raleigh/Greensboro': 'Southeast',
+    'Richmond/Norfolk': 'Southeast',
+    'Roanoke': 'Southeast',
+    'Sacramento': 'West',
+    'San Diego': 'West',
+    'San Francisco': 'West',
+    'Seattle': 'West',
+    'South Carolina': 'Southeast',
+    'South Central': 'South Central',
+    'Southeast': 'Southeast',
+    'Spokane': 'West',
+    'St. Louis': 'Plains',
+    'Syracuse': 'Northeast',
+    'Tampa': 'Southeast',
+    'Total U.S.': None,
+    'West': 'West',
+    'West Tex/New Mexico': 'West'
+})
+```
+```{python}
+avocado.rename(columns={
+    '4046': 'Small Hass Avocados',
+    '4225': 'Medium Hass Avocados',
+    '4770': 'Large Hass Avocados'
+}, inplace=True)
+avocado
+```
+## 3) Which major geographical region sold the most total organic, small Hass avocados in 2017?
+```{python}
+avocado['date'] = pd.to_datetime(avocado['date'])
+avocado_2017 = avocado[(avocado['date'].dt.year == 2017) & 
+(avocado['type'] == 'organic')]
+```
+
+```{python}
+region_sales = avocado_2017.groupby('geography')['Small Hass Avocados'].sum()
+
+print(f"The top region is {region_sales.idxmax()} with {region_sales.max()} small organic hass avocados sold in 2017.")
+```
+##The top region is West with 5826061.33 small organic hass avocados sold in 2017.
+
+## 4)Split the date variable into month, day, and year variables. In which month is the highest average volume of avocado sales?
+```{python}
+avocado['year'] = avocado['date'].dt.year
+avocado['month'] = avocado['date'].dt.month
+avocado['day'] = avocado['date'].dt.day
+avocado
+```
+
+```{python}
+average_month = avocado.groupby('month')['total_volume'].mean()
+```
+```{python}
+average_month
+```
+The month with the highest average avocado sales is May with 1123632.25 units on average
+
+## 5)  Which metro area geographical regions sold the most total avocados? Plot side-by-side box-plots of the total volume for only the five metro geographical regions with the highest averages for the total_volume variable.
+
+```{python}
+import seaborn as sns
+import matplotlib.pyplot as plt
+```
+```{python}
+avocado_five_metro = avocado
+avocado_five_metro['geography'] = avocado['geography'].replace({
+    'Albany': 'Northeast',
+    'Boston': 'Northeast',
+    'Buffalo/Rochester': 'Northeast',
+    'Harrisburg/Scranton': 'Northeast',
+    'Hartford/Springfield': 'Northeast',
+    'New York': 'Northeast',
+    'Northeast': 'Northeast',
+    'Northern New England': 'Northeast',
+    'Philadelphia': 'Northeast',
+    'Pittsburgh': 'Northeast',
+    'Syracuse': 'Northeast',
+    'Baltimore/Washington': 'Northeast',
+    'Atlanta': 'Southeast',
+    'Charlotte': 'Southeast',
+    'Jacksonville': 'Southeast',
+    'Miami/Ft. Lauderdale': 'Southeast',
+    'Orlando': 'Southeast',
+    'Raleigh/Greensboro': 'Southeast',
+    'Richmond/Norfolk': 'Southeast',
+    'Roanoke': 'Southeast',
+    'South Carolina': 'Southeast',
+    'Tampa': 'Southeast',
+    'Southeast': 'Southeast',
+    'Chicago': 'Midwest',
+    'Cincinnati/Dayton': 'Midwest',
+    'Columbus': 'Midwest',
+    'Detroit': 'Midwest',
+    'Grand Rapids': 'Midwest',
+    'Great Lakes': 'Midwest',
+    'Indianapolis': 'Midwest',
+    'Louisville': 'Midwest',
+    'Midsouth': 'Midwest',
+    'Nashville': 'Midwest',
+    'St. Louis': 'Midwest',
+    'Plains': 'Midwest',
+    'Dallas/Ft. Worth': 'Southwest',
+    'Houston': 'Southwest',
+    'New Orleans/Mobile': 'Southwest',
+    'South Central': 'Southwest',
+    'Boise': 'West',
+    'California': 'West',
+    'Denver': 'West',
+    'Las Vegas': 'West',
+    'Los Angeles': 'West',
+    'Phoenix/Tucson': 'West',
+    'Portland': 'West',
+    'Sacramento': 'West',
+    'San Diego': 'West',
+    'San Francisco': 'West',
+    'Seattle': 'West',
+    'Spokane': 'West',
+    'West': 'West',
+    'West Tex/New Mexico': 'West',
+    'Total U.S.': None
+})
+```
+```{python}
+plt.figure(figsize=(12, 6))
+sns.boxplot(x='geography', y='total_volume', data=avocado_five_metro)
+plt.xticks(rotation=45)
+plt.title("Total Avocado Volume by Top 5 Metro Areas")
+plt.ylabel("Total Volume Sold")
+plt.xlabel("Metro Area")
+plt.show()
+```
+
+## 6) From your cleaned data set, create a data set with only these California regions and answer the following questions about these California regions only.
+```{python}
+avocado_original = pd.read_csv("avocado-updated-2020.csv")
+avocado_cali = avocado_original[avocado_original['geography'].isin([
+    'Los Angeles', 'San Diego', 'San Francisco', 'Sacramento'
+])]
+avocado_cali
+```
+
+## 7) In which California regions is the price of organic versus conventional avocados most different? Support your answer with a few summary statistics AND a visualization.
+```{python}
+price_summary = (
+    avocado_cali.groupby(['geography', 'type'])['average_price']
+    .mean()
+    .unstack()  # separate organic/conventional into columns
+)
+price_summary['difference'] = abs(price_summary['organic'] - price_summary['conventional'])
+price_summary = price_summary.sort_values('difference', ascending=False)
+print(price_summary)
+
+```
+
+## 8) The following plot shows, for all four California regions, the proportion of the average Hass avocado sales that are small, large, or extra large; conventional vs. organic. Recreate the plot; you do not have to replicate the exact finishing touches - e.g., color, theme - but your plot should resemble the content of this plot.
+
+```{python}
+avocado_cali
+```
+```{python}
+# got help from AI to make size variable
+avocado_long = avocado_cali.melt(
+    id_vars=['geography', 'type', 'total_volume'],   # columns to keep
+    value_vars=['4046', '4225', '4770'],  # columns to unpivot
+    var_name='size',          # new column name for variable
+    value_name='volume'       # new column name for values
+)
+```
+```{python}
+avocado_long["average_price"] = avocado["average_price"]
+```
+```{python}
+# got help from AI to make proportions and transformations
+avocado_long['proportion'] = avocado_long.groupby(["type", "geography"])["volume"].transform(lambda x: x / x.sum())
+```
+
+```{python}
+#had problems trying to import plotnine looked up other ways to graph with AI
+import matplotlib.pyplot as plt
+avocado_long.rename(columns={
+    '4046': 'Small Hass Avocados',
+    '4225': 'Medium Hass Avocados',
+    '4770': 'Large Hass Avocados'
+}, inplace=True)
+
+# 2 Create a pivot table for plotting
+avocado_cali_pivot = (
+    avocado_long.pivot_table(
+        index=['type', 'geography'],
+        columns='size',
+        values='proportion',
+        aggfunc='mean'
+    )
+    .fillna(0)
+)
+
+# 3 Plot stacked bars
+fig, axes = plt.subplots(1, 2, figsize=(10, 6), sharey=True)
+
+types = avocado_cali_pivot.index.get_level_values('type').unique()
+colors = ['#D77A29', '#4E937A', '#6C63FF']  # Small, Large, Xlarge
+
+for ax, t in zip(axes, types):
+    avocado_cali_pivot.loc[t].plot(
+        kind='bar',
+        stacked=True,
+        color=colors,
+        ax=ax,
+        width=0.8
+    )
+    ax.set_title(t, fontsize=12)
+    ax.set_xlabel('Region of California')
+    ax.set_ylabel('Proportion')
+    ax.legend(title='size', bbox_to_anchor=(1.02, 1), loc='upper left')
+
+fig.suptitle('Proportion of Average Hass Avocado Sales by Size', fontsize=14)
+plt.tight_layout()
+plt.show()
+
+```
+
+
+#Had some problems trying to do this last part I will come into office hours to try and figure it out.
+```{python}
+metro = pd.read_csv("metro_sales.csv")
+metro_clean = metro[metro["StateName"] == "CA"]
+metro_clean
+```
+```{python}
+metro_cleanii = metro_clean[metro_clean["RegionName"].isin([
+    "Los Angeles, CA", "San Francisco, CA", "San Diego, CA", "Sacramento, CA"
+])]
+metro_cleanii
+```
+
+```{python}
+metro_cleanii["geography"] = metro_cleanii["RegionName"].map({
+    "Los Angeles, CA": "Los Angeles",
+    "San Francisco, CA": "San Francisco",
+    "San Diego, CA": "San Diego",
+    "Sacramento, CA": "Sacramento"
+})
+```
+
+```{python}
+avocado_with_summary = pd.merge(avocado_long, metro_cleanii, on='geography', how='left')
+avocado_with_summary
+
+```
+```{python}
+sns.lmplot(data=avocado_with_summary, x='average_price', y='2/29/2008', hue='geography', aspect=1.3)
+plt.title("Relationship Between Avocado Prices and Housing Prices")
+plt.xlabel("Avocado Price (USD)")
+plt.ylabel("average home price 2/29/2008")
+plt.show()
+```
+```{python}
+sns.lmplot(data=avocado_with_summary, x='average_price', y='8/31/2025', hue='geography', aspect=1.3)
+plt.title("No Relationship Between Avocado Prices and Housing Prices")
+plt.xlabel("Avocado Price (USD)")
+plt.ylabel("average home price 8/31/2025")
+plt.show()
+```

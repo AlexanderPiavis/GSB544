@@ -1,0 +1,2586 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Lab 2</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="Lab2_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Lab2_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="Lab2_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="Lab2_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="Lab2_files/libs/quarto-html/popper.min.js"></script>
+<script src="Lab2_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Lab2_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Lab2_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Lab2_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Lab2_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Lab2_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Lab2_files/libs/bootstrap/bootstrap-9e3ffae467580fdb927a41352e75a2e0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lab 2</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div id="fda6cb7f" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="7ec89cb4" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>avocado_original <span class="op">=</span> pd.read_csv(<span class="st">"avocado-updated-2020.csv"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>avocado <span class="op">=</span> avocado_original</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>avocado.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">average_price</th>
+<th data-quarto-table-cell-role="th">total_volume</th>
+<th data-quarto-table-cell-role="th">4046</th>
+<th data-quarto-table-cell-role="th">4225</th>
+<th data-quarto-table-cell-role="th">4770</th>
+<th data-quarto-table-cell-role="th">total_bags</th>
+<th data-quarto-table-cell-role="th">small_bags</th>
+<th data-quarto-table-cell-role="th">large_bags</th>
+<th data-quarto-table-cell-role="th">xlarge_bags</th>
+<th data-quarto-table-cell-role="th">type</th>
+<th data-quarto-table-cell-role="th">year</th>
+<th data-quarto-table-cell-role="th">geography</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>2015-01-04</td>
+<td>1.22</td>
+<td>40873.28</td>
+<td>2819.50</td>
+<td>28287.42</td>
+<td>49.90</td>
+<td>9716.46</td>
+<td>9186.93</td>
+<td>529.53</td>
+<td>0.0</td>
+<td>conventional</td>
+<td>2015</td>
+<td>Albany</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>2015-01-04</td>
+<td>1.79</td>
+<td>1373.95</td>
+<td>57.42</td>
+<td>153.88</td>
+<td>0.00</td>
+<td>1162.65</td>
+<td>1162.65</td>
+<td>0.00</td>
+<td>0.0</td>
+<td>organic</td>
+<td>2015</td>
+<td>Albany</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>2015-01-04</td>
+<td>1.00</td>
+<td>435021.49</td>
+<td>364302.39</td>
+<td>23821.16</td>
+<td>82.15</td>
+<td>46815.79</td>
+<td>16707.15</td>
+<td>30108.64</td>
+<td>0.0</td>
+<td>conventional</td>
+<td>2015</td>
+<td>Atlanta</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>2015-01-04</td>
+<td>1.76</td>
+<td>3846.69</td>
+<td>1500.15</td>
+<td>938.35</td>
+<td>0.00</td>
+<td>1408.19</td>
+<td>1071.35</td>
+<td>336.84</td>
+<td>0.0</td>
+<td>organic</td>
+<td>2015</td>
+<td>Atlanta</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>2015-01-04</td>
+<td>1.08</td>
+<td>788025.06</td>
+<td>53987.31</td>
+<td>552906.04</td>
+<td>39995.03</td>
+<td>141136.68</td>
+<td>137146.07</td>
+<td>3990.61</td>
+<td>0.0</td>
+<td>conventional</td>
+<td>2015</td>
+<td>Baltimore/Washington</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<ol type="1">
+<li>The dataset contains multiple obervations of avocados. Including the average price of one avocado, total volume, Total number of avocados with PLU 4225 sold, Total number of avocados with PLU 4770 sold, number of bags including small, large, and extra large bags, type of bag, year, and the geography of the avocados.</li>
+</ol>
+<div id="76377518" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>avocado[<span class="st">'geography'</span>] <span class="op">=</span> avocado[<span class="st">'geography'</span>].astype(<span class="st">'category'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="733b6d4e" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>avocado[<span class="st">"geography"</span>].unique()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>['Albany', 'Atlanta', 'Baltimore/Washington', 'Boise', 'Boston', ..., 'Syracuse', 'Tampa', 'Total U.S.', 'West', 'West Tex/New Mexico']
+Length: 54
+Categories (54, object): ['Albany', 'Atlanta', 'Baltimore/Washington', 'Boise', ..., 'Tampa', 'Total U.S.', 'West', 'West Tex/New Mexico']</code></pre>
+</div>
+</div>
+<div id="3f1e0c9c" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>avocado[<span class="st">'geography'</span>] <span class="op">=</span> avocado[<span class="st">'geography'</span>].replace({</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Albany'</span>: <span class="st">'Northeast'</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Atlanta'</span>: <span class="st">'Southeast'</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Baltimore/Washington'</span>: <span class="st">'Southeast'</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Boise'</span>: <span class="st">'West'</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Boston'</span>: <span class="st">'Northeast'</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Buffalo/Rochester'</span>: <span class="st">'Northeast'</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'California'</span>: <span class="st">'West'</span>,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Charlotte'</span>: <span class="st">'Southeast'</span>,</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Chicago'</span>: <span class="st">'Plains'</span>,</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Cincinnati/Dayton'</span>: <span class="st">'Midsouth'</span>,</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Columbus'</span>: <span class="st">'Midsouth'</span>,</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Dallas/Ft. Worth'</span>: <span class="st">'South Central'</span>,</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Denver'</span>: <span class="st">'West'</span>,</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Detroit'</span>: <span class="st">'Plains'</span>,</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Grand Rapids'</span>: <span class="st">'Plains'</span>,</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Great Lakes'</span>: <span class="st">'Plains'</span>,</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Harrisburg/Scranton'</span>: <span class="st">'Northeast'</span>,</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Hartford/Springfield'</span>: <span class="st">'Northeast'</span>,</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Houston'</span>: <span class="st">'South Central'</span>,</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Indianapolis'</span>: <span class="st">'Midsouth'</span>,</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Jacksonville'</span>: <span class="st">'Southeast'</span>,</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Las Vegas'</span>: <span class="st">'West'</span>,</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Los Angeles'</span>: <span class="st">'West'</span>,</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Louisville'</span>: <span class="st">'Midsouth'</span>,</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Miami/Ft. Lauderdale'</span>: <span class="st">'Southeast'</span>,</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Midsouth'</span>: <span class="st">'Midsouth'</span>,</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Nashville'</span>: <span class="st">'Midsouth'</span>,</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    <span class="st">'New Orleans/Mobile'</span>: <span class="st">'South Central'</span>,</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">'New York'</span>: <span class="st">'Northeast'</span>,</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Northeast'</span>: <span class="st">'Northeast'</span>,</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Northern New England'</span>: <span class="st">'Northeast'</span>,</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Orlando'</span>: <span class="st">'Southeast'</span>,</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Philadelphia'</span>: <span class="st">'Northeast'</span>,</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Phoenix/Tucson'</span>: <span class="st">'West'</span>,</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Pittsburgh'</span>: <span class="st">'Northeast'</span>,</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Plains'</span>: <span class="st">'Plains'</span>,</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Portland'</span>: <span class="st">'West'</span>,</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Raleigh/Greensboro'</span>: <span class="st">'Southeast'</span>,</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Richmond/Norfolk'</span>: <span class="st">'Southeast'</span>,</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Roanoke'</span>: <span class="st">'Southeast'</span>,</span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Sacramento'</span>: <span class="st">'West'</span>,</span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>    <span class="st">'San Diego'</span>: <span class="st">'West'</span>,</span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>    <span class="st">'San Francisco'</span>: <span class="st">'West'</span>,</span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Seattle'</span>: <span class="st">'West'</span>,</span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>    <span class="st">'South Carolina'</span>: <span class="st">'Southeast'</span>,</span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>    <span class="st">'South Central'</span>: <span class="st">'South Central'</span>,</span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Southeast'</span>: <span class="st">'Southeast'</span>,</span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Spokane'</span>: <span class="st">'West'</span>,</span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>    <span class="st">'St. Louis'</span>: <span class="st">'Plains'</span>,</span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Syracuse'</span>: <span class="st">'Northeast'</span>,</span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Tampa'</span>: <span class="st">'Southeast'</span>,</span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Total U.S.'</span>: <span class="va">None</span>,</span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>    <span class="st">'West'</span>: <span class="st">'West'</span>,</span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>    <span class="st">'West Tex/New Mexico'</span>: <span class="st">'West'</span></span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>C:\Users\piavi\AppData\Local\Temp\ipykernel_33600\3951571499.py:1: FutureWarning:
+
+The behavior of Series.replace (and DataFrame.replace) with CategoricalDtype is deprecated. In a future version, replace will only be used for cases that preserve the categories. To change the categories, use ser.cat.rename_categories instead.
+</code></pre>
+</div>
+</div>
+<div id="ea48607b" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>avocado.rename(columns<span class="op">=</span>{</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'4046'</span>: <span class="st">'Small Hass Avocados'</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'4225'</span>: <span class="st">'Medium Hass Avocados'</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'4770'</span>: <span class="st">'Large Hass Avocados'</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>}, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>avocado</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">average_price</th>
+<th data-quarto-table-cell-role="th">total_volume</th>
+<th data-quarto-table-cell-role="th">Small Hass Avocados</th>
+<th data-quarto-table-cell-role="th">Medium Hass Avocados</th>
+<th data-quarto-table-cell-role="th">Large Hass Avocados</th>
+<th data-quarto-table-cell-role="th">total_bags</th>
+<th data-quarto-table-cell-role="th">small_bags</th>
+<th data-quarto-table-cell-role="th">large_bags</th>
+<th data-quarto-table-cell-role="th">xlarge_bags</th>
+<th data-quarto-table-cell-role="th">type</th>
+<th data-quarto-table-cell-role="th">year</th>
+<th data-quarto-table-cell-role="th">geography</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>2015-01-04</td>
+<td>1.22</td>
+<td>40873.28</td>
+<td>2819.50</td>
+<td>28287.42</td>
+<td>49.90</td>
+<td>9716.46</td>
+<td>9186.93</td>
+<td>529.53</td>
+<td>0.00</td>
+<td>conventional</td>
+<td>2015</td>
+<td>Northeast</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>2015-01-04</td>
+<td>1.79</td>
+<td>1373.95</td>
+<td>57.42</td>
+<td>153.88</td>
+<td>0.00</td>
+<td>1162.65</td>
+<td>1162.65</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>organic</td>
+<td>2015</td>
+<td>Northeast</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>2015-01-04</td>
+<td>1.00</td>
+<td>435021.49</td>
+<td>364302.39</td>
+<td>23821.16</td>
+<td>82.15</td>
+<td>46815.79</td>
+<td>16707.15</td>
+<td>30108.64</td>
+<td>0.00</td>
+<td>conventional</td>
+<td>2015</td>
+<td>Southeast</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>2015-01-04</td>
+<td>1.76</td>
+<td>3846.69</td>
+<td>1500.15</td>
+<td>938.35</td>
+<td>0.00</td>
+<td>1408.19</td>
+<td>1071.35</td>
+<td>336.84</td>
+<td>0.00</td>
+<td>organic</td>
+<td>2015</td>
+<td>Southeast</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>2015-01-04</td>
+<td>1.08</td>
+<td>788025.06</td>
+<td>53987.31</td>
+<td>552906.04</td>
+<td>39995.03</td>
+<td>141136.68</td>
+<td>137146.07</td>
+<td>3990.61</td>
+<td>0.00</td>
+<td>conventional</td>
+<td>2015</td>
+<td>Southeast</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">...</th>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">33040</th>
+<td>2020-11-29</td>
+<td>1.47</td>
+<td>1583056.27</td>
+<td>67544.48</td>
+<td>97996.46</td>
+<td>2617.17</td>
+<td>1414878.10</td>
+<td>906711.52</td>
+<td>480191.83</td>
+<td>27974.75</td>
+<td>organic</td>
+<td>2020</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">33041</th>
+<td>2020-11-29</td>
+<td>0.91</td>
+<td>5811114.22</td>
+<td>1352877.53</td>
+<td>589061.83</td>
+<td>19741.90</td>
+<td>3790665.29</td>
+<td>2197611.02</td>
+<td>1531530.14</td>
+<td>61524.13</td>
+<td>conventional</td>
+<td>2020</td>
+<td>West</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">33042</th>
+<td>2020-11-29</td>
+<td>1.48</td>
+<td>289961.27</td>
+<td>13273.75</td>
+<td>19341.09</td>
+<td>636.51</td>
+<td>256709.92</td>
+<td>122606.21</td>
+<td>134103.71</td>
+<td>0.00</td>
+<td>organic</td>
+<td>2020</td>
+<td>West</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">33043</th>
+<td>2020-11-29</td>
+<td>0.67</td>
+<td>822818.75</td>
+<td>234688.01</td>
+<td>80205.15</td>
+<td>10543.63</td>
+<td>497381.96</td>
+<td>285764.11</td>
+<td>210808.02</td>
+<td>809.83</td>
+<td>conventional</td>
+<td>2020</td>
+<td>West</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">33044</th>
+<td>2020-11-29</td>
+<td>1.35</td>
+<td>24106.58</td>
+<td>1236.96</td>
+<td>617.80</td>
+<td>1564.98</td>
+<td>20686.84</td>
+<td>17824.52</td>
+<td>2862.32</td>
+<td>0.00</td>
+<td>organic</td>
+<td>2020</td>
+<td>West</td>
+</tr>
+</tbody>
+</table>
+
+<p>33045 rows × 13 columns</p>
+</div>
+</div>
+</div>
+<section id="which-major-geographical-region-sold-the-most-total-organic-small-hass-avocados-in-2017" class="level2">
+<h2 class="anchored" data-anchor-id="which-major-geographical-region-sold-the-most-total-organic-small-hass-avocados-in-2017">3) Which major geographical region sold the most total organic, small Hass avocados in 2017?</h2>
+<div id="037df48c" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>avocado[<span class="st">'date'</span>] <span class="op">=</span> pd.to_datetime(avocado[<span class="st">'date'</span>])</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>avocado_2017 <span class="op">=</span> avocado[(avocado[<span class="st">'date'</span>].dt.year <span class="op">==</span> <span class="dv">2017</span>) <span class="op">&amp;</span> </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>(avocado[<span class="st">'type'</span>] <span class="op">==</span> <span class="st">'organic'</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="df15678b" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>region_sales <span class="op">=</span> avocado_2017.groupby(<span class="st">'geography'</span>)[<span class="st">'Small Hass Avocados'</span>].<span class="bu">sum</span>()</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"The top region is </span><span class="sc">{</span>region_sales<span class="sc">.</span>idxmax()<span class="sc">}</span><span class="ss"> with </span><span class="sc">{</span>region_sales<span class="sc">.</span><span class="bu">max</span>()<span class="sc">}</span><span class="ss"> small organic hass avocados sold in 2017."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The top region is West with 5826061.33 small organic hass avocados sold in 2017.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>C:\Users\piavi\AppData\Local\Temp\ipykernel_33600\103549062.py:1: FutureWarning:
+
+The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
+</code></pre>
+</div>
+</div>
+<p>##The top region is West with 5826061.33 small organic hass avocados sold in 2017.</p>
+</section>
+<section id="split-the-date-variable-into-month-day-and-year-variables.-in-which-month-is-the-highest-average-volume-of-avocado-sales" class="level2">
+<h2 class="anchored" data-anchor-id="split-the-date-variable-into-month-day-and-year-variables.-in-which-month-is-the-highest-average-volume-of-avocado-sales">4)Split the date variable into month, day, and year variables. In which month is the highest average volume of avocado sales?</h2>
+<div id="931c5f0e" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>avocado[<span class="st">'year'</span>] <span class="op">=</span> avocado[<span class="st">'date'</span>].dt.year</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>avocado[<span class="st">'month'</span>] <span class="op">=</span> avocado[<span class="st">'date'</span>].dt.month</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>avocado[<span class="st">'day'</span>] <span class="op">=</span> avocado[<span class="st">'date'</span>].dt.day</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>avocado</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">average_price</th>
+<th data-quarto-table-cell-role="th">total_volume</th>
+<th data-quarto-table-cell-role="th">Small Hass Avocados</th>
+<th data-quarto-table-cell-role="th">Medium Hass Avocados</th>
+<th data-quarto-table-cell-role="th">Large Hass Avocados</th>
+<th data-quarto-table-cell-role="th">total_bags</th>
+<th data-quarto-table-cell-role="th">small_bags</th>
+<th data-quarto-table-cell-role="th">large_bags</th>
+<th data-quarto-table-cell-role="th">xlarge_bags</th>
+<th data-quarto-table-cell-role="th">type</th>
+<th data-quarto-table-cell-role="th">year</th>
+<th data-quarto-table-cell-role="th">geography</th>
+<th data-quarto-table-cell-role="th">month</th>
+<th data-quarto-table-cell-role="th">day</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>2015-01-04</td>
+<td>1.22</td>
+<td>40873.28</td>
+<td>2819.50</td>
+<td>28287.42</td>
+<td>49.90</td>
+<td>9716.46</td>
+<td>9186.93</td>
+<td>529.53</td>
+<td>0.00</td>
+<td>conventional</td>
+<td>2015</td>
+<td>Northeast</td>
+<td>1</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>2015-01-04</td>
+<td>1.79</td>
+<td>1373.95</td>
+<td>57.42</td>
+<td>153.88</td>
+<td>0.00</td>
+<td>1162.65</td>
+<td>1162.65</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>organic</td>
+<td>2015</td>
+<td>Northeast</td>
+<td>1</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>2015-01-04</td>
+<td>1.00</td>
+<td>435021.49</td>
+<td>364302.39</td>
+<td>23821.16</td>
+<td>82.15</td>
+<td>46815.79</td>
+<td>16707.15</td>
+<td>30108.64</td>
+<td>0.00</td>
+<td>conventional</td>
+<td>2015</td>
+<td>Southeast</td>
+<td>1</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>2015-01-04</td>
+<td>1.76</td>
+<td>3846.69</td>
+<td>1500.15</td>
+<td>938.35</td>
+<td>0.00</td>
+<td>1408.19</td>
+<td>1071.35</td>
+<td>336.84</td>
+<td>0.00</td>
+<td>organic</td>
+<td>2015</td>
+<td>Southeast</td>
+<td>1</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>2015-01-04</td>
+<td>1.08</td>
+<td>788025.06</td>
+<td>53987.31</td>
+<td>552906.04</td>
+<td>39995.03</td>
+<td>141136.68</td>
+<td>137146.07</td>
+<td>3990.61</td>
+<td>0.00</td>
+<td>conventional</td>
+<td>2015</td>
+<td>Southeast</td>
+<td>1</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">...</th>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">33040</th>
+<td>2020-11-29</td>
+<td>1.47</td>
+<td>1583056.27</td>
+<td>67544.48</td>
+<td>97996.46</td>
+<td>2617.17</td>
+<td>1414878.10</td>
+<td>906711.52</td>
+<td>480191.83</td>
+<td>27974.75</td>
+<td>organic</td>
+<td>2020</td>
+<td>NaN</td>
+<td>11</td>
+<td>29</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">33041</th>
+<td>2020-11-29</td>
+<td>0.91</td>
+<td>5811114.22</td>
+<td>1352877.53</td>
+<td>589061.83</td>
+<td>19741.90</td>
+<td>3790665.29</td>
+<td>2197611.02</td>
+<td>1531530.14</td>
+<td>61524.13</td>
+<td>conventional</td>
+<td>2020</td>
+<td>West</td>
+<td>11</td>
+<td>29</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">33042</th>
+<td>2020-11-29</td>
+<td>1.48</td>
+<td>289961.27</td>
+<td>13273.75</td>
+<td>19341.09</td>
+<td>636.51</td>
+<td>256709.92</td>
+<td>122606.21</td>
+<td>134103.71</td>
+<td>0.00</td>
+<td>organic</td>
+<td>2020</td>
+<td>West</td>
+<td>11</td>
+<td>29</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">33043</th>
+<td>2020-11-29</td>
+<td>0.67</td>
+<td>822818.75</td>
+<td>234688.01</td>
+<td>80205.15</td>
+<td>10543.63</td>
+<td>497381.96</td>
+<td>285764.11</td>
+<td>210808.02</td>
+<td>809.83</td>
+<td>conventional</td>
+<td>2020</td>
+<td>West</td>
+<td>11</td>
+<td>29</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">33044</th>
+<td>2020-11-29</td>
+<td>1.35</td>
+<td>24106.58</td>
+<td>1236.96</td>
+<td>617.80</td>
+<td>1564.98</td>
+<td>20686.84</td>
+<td>17824.52</td>
+<td>2862.32</td>
+<td>0.00</td>
+<td>organic</td>
+<td>2020</td>
+<td>West</td>
+<td>11</td>
+<td>29</td>
+</tr>
+</tbody>
+</table>
+
+<p>33045 rows × 15 columns</p>
+</div>
+</div>
+</div>
+<div id="85ccc695" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>average_month <span class="op">=</span> avocado.groupby(<span class="st">'month'</span>)[<span class="st">'total_volume'</span>].mean()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="302c8349" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>average_month</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<pre><code>month
+1     9.853122e+05
+2     1.095374e+06
+3     9.957150e+05
+4     1.016582e+06
+5     1.123632e+06
+6     1.051247e+06
+7     9.832681e+05
+8     9.499249e+05
+9     9.064773e+05
+10    8.446863e+05
+11    8.223470e+05
+12    8.076695e+05
+Name: total_volume, dtype: float64</code></pre>
+</div>
+</div>
+<p>The month with the highest average avocado sales is May with 1123632.25 units on average</p>
+</section>
+<section id="which-metro-area-geographical-regions-sold-the-most-total-avocados-plot-side-by-side-box-plots-of-the-total-volume-for-only-the-five-metro-geographical-regions-with-the-highest-averages-for-the-total_volume-variable." class="level2">
+<h2 class="anchored" data-anchor-id="which-metro-area-geographical-regions-sold-the-most-total-avocados-plot-side-by-side-box-plots-of-the-total-volume-for-only-the-five-metro-geographical-regions-with-the-highest-averages-for-the-total_volume-variable.">5) Which metro area geographical regions sold the most total avocados? Plot side-by-side box-plots of the total volume for only the five metro geographical regions with the highest averages for the total_volume variable.</h2>
+<div id="14e123ab" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="75b621fe" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>avocado_five_metro <span class="op">=</span> avocado</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>avocado_five_metro[<span class="st">'geography'</span>] <span class="op">=</span> avocado[<span class="st">'geography'</span>].replace({</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Albany'</span>: <span class="st">'Northeast'</span>,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Boston'</span>: <span class="st">'Northeast'</span>,</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Buffalo/Rochester'</span>: <span class="st">'Northeast'</span>,</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Harrisburg/Scranton'</span>: <span class="st">'Northeast'</span>,</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Hartford/Springfield'</span>: <span class="st">'Northeast'</span>,</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'New York'</span>: <span class="st">'Northeast'</span>,</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Northeast'</span>: <span class="st">'Northeast'</span>,</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Northern New England'</span>: <span class="st">'Northeast'</span>,</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Philadelphia'</span>: <span class="st">'Northeast'</span>,</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Pittsburgh'</span>: <span class="st">'Northeast'</span>,</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Syracuse'</span>: <span class="st">'Northeast'</span>,</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Baltimore/Washington'</span>: <span class="st">'Northeast'</span>,</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Atlanta'</span>: <span class="st">'Southeast'</span>,</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Charlotte'</span>: <span class="st">'Southeast'</span>,</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Jacksonville'</span>: <span class="st">'Southeast'</span>,</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Miami/Ft. Lauderdale'</span>: <span class="st">'Southeast'</span>,</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Orlando'</span>: <span class="st">'Southeast'</span>,</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Raleigh/Greensboro'</span>: <span class="st">'Southeast'</span>,</span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Richmond/Norfolk'</span>: <span class="st">'Southeast'</span>,</span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Roanoke'</span>: <span class="st">'Southeast'</span>,</span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">'South Carolina'</span>: <span class="st">'Southeast'</span>,</span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Tampa'</span>: <span class="st">'Southeast'</span>,</span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Southeast'</span>: <span class="st">'Southeast'</span>,</span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Chicago'</span>: <span class="st">'Midwest'</span>,</span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Cincinnati/Dayton'</span>: <span class="st">'Midwest'</span>,</span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Columbus'</span>: <span class="st">'Midwest'</span>,</span>
+<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Detroit'</span>: <span class="st">'Midwest'</span>,</span>
+<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Grand Rapids'</span>: <span class="st">'Midwest'</span>,</span>
+<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Great Lakes'</span>: <span class="st">'Midwest'</span>,</span>
+<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Indianapolis'</span>: <span class="st">'Midwest'</span>,</span>
+<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Louisville'</span>: <span class="st">'Midwest'</span>,</span>
+<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Midsouth'</span>: <span class="st">'Midwest'</span>,</span>
+<span id="cb18-35"><a href="#cb18-35" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Nashville'</span>: <span class="st">'Midwest'</span>,</span>
+<span id="cb18-36"><a href="#cb18-36" aria-hidden="true" tabindex="-1"></a>    <span class="st">'St. Louis'</span>: <span class="st">'Midwest'</span>,</span>
+<span id="cb18-37"><a href="#cb18-37" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Plains'</span>: <span class="st">'Midwest'</span>,</span>
+<span id="cb18-38"><a href="#cb18-38" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Dallas/Ft. Worth'</span>: <span class="st">'Southwest'</span>,</span>
+<span id="cb18-39"><a href="#cb18-39" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Houston'</span>: <span class="st">'Southwest'</span>,</span>
+<span id="cb18-40"><a href="#cb18-40" aria-hidden="true" tabindex="-1"></a>    <span class="st">'New Orleans/Mobile'</span>: <span class="st">'Southwest'</span>,</span>
+<span id="cb18-41"><a href="#cb18-41" aria-hidden="true" tabindex="-1"></a>    <span class="st">'South Central'</span>: <span class="st">'Southwest'</span>,</span>
+<span id="cb18-42"><a href="#cb18-42" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Boise'</span>: <span class="st">'West'</span>,</span>
+<span id="cb18-43"><a href="#cb18-43" aria-hidden="true" tabindex="-1"></a>    <span class="st">'California'</span>: <span class="st">'West'</span>,</span>
+<span id="cb18-44"><a href="#cb18-44" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Denver'</span>: <span class="st">'West'</span>,</span>
+<span id="cb18-45"><a href="#cb18-45" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Las Vegas'</span>: <span class="st">'West'</span>,</span>
+<span id="cb18-46"><a href="#cb18-46" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Los Angeles'</span>: <span class="st">'West'</span>,</span>
+<span id="cb18-47"><a href="#cb18-47" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Phoenix/Tucson'</span>: <span class="st">'West'</span>,</span>
+<span id="cb18-48"><a href="#cb18-48" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Portland'</span>: <span class="st">'West'</span>,</span>
+<span id="cb18-49"><a href="#cb18-49" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Sacramento'</span>: <span class="st">'West'</span>,</span>
+<span id="cb18-50"><a href="#cb18-50" aria-hidden="true" tabindex="-1"></a>    <span class="st">'San Diego'</span>: <span class="st">'West'</span>,</span>
+<span id="cb18-51"><a href="#cb18-51" aria-hidden="true" tabindex="-1"></a>    <span class="st">'San Francisco'</span>: <span class="st">'West'</span>,</span>
+<span id="cb18-52"><a href="#cb18-52" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Seattle'</span>: <span class="st">'West'</span>,</span>
+<span id="cb18-53"><a href="#cb18-53" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Spokane'</span>: <span class="st">'West'</span>,</span>
+<span id="cb18-54"><a href="#cb18-54" aria-hidden="true" tabindex="-1"></a>    <span class="st">'West'</span>: <span class="st">'West'</span>,</span>
+<span id="cb18-55"><a href="#cb18-55" aria-hidden="true" tabindex="-1"></a>    <span class="st">'West Tex/New Mexico'</span>: <span class="st">'West'</span>,</span>
+<span id="cb18-56"><a href="#cb18-56" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Total U.S.'</span>: <span class="va">None</span></span>
+<span id="cb18-57"><a href="#cb18-57" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>C:\Users\piavi\AppData\Local\Temp\ipykernel_33600\1401186176.py:2: FutureWarning:
+
+The behavior of Series.replace (and DataFrame.replace) with CategoricalDtype is deprecated. In a future version, replace will only be used for cases that preserve the categories. To change the categories, use ser.cat.rename_categories instead.
+</code></pre>
+</div>
+</div>
+<div id="01e83287" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>sns.boxplot(x<span class="op">=</span><span class="st">'geography'</span>, y<span class="op">=</span><span class="st">'total_volume'</span>, data<span class="op">=</span>avocado_five_metro)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">45</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Total Avocado Volume by Top 5 Metro Areas"</span>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Total Volume Sold"</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Metro Area"</span>)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Lab2_files/figure-html/cell-15-output-1.png" width="961" height="569" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="from-your-cleaned-data-set-create-a-data-set-with-only-these-california-regions-and-answer-the-following-questions-about-these-california-regions-only." class="level2">
+<h2 class="anchored" data-anchor-id="from-your-cleaned-data-set-create-a-data-set-with-only-these-california-regions-and-answer-the-following-questions-about-these-california-regions-only.">6) From your cleaned data set, create a data set with only these California regions and answer the following questions about these California regions only.</h2>
+<div id="db9fd3ce" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>avocado_original <span class="op">=</span> pd.read_csv(<span class="st">"avocado-updated-2020.csv"</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>avocado_cali <span class="op">=</span> avocado_original[avocado_original[<span class="st">'geography'</span>].isin([</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Los Angeles'</span>, <span class="st">'San Diego'</span>, <span class="st">'San Francisco'</span>, <span class="st">'Sacramento'</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>])]</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>avocado_cali</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">average_price</th>
+<th data-quarto-table-cell-role="th">total_volume</th>
+<th data-quarto-table-cell-role="th">4046</th>
+<th data-quarto-table-cell-role="th">4225</th>
+<th data-quarto-table-cell-role="th">4770</th>
+<th data-quarto-table-cell-role="th">total_bags</th>
+<th data-quarto-table-cell-role="th">small_bags</th>
+<th data-quarto-table-cell-role="th">large_bags</th>
+<th data-quarto-table-cell-role="th">xlarge_bags</th>
+<th data-quarto-table-cell-role="th">type</th>
+<th data-quarto-table-cell-role="th">year</th>
+<th data-quarto-table-cell-role="th">geography</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">44</th>
+<td>2015-01-04</td>
+<td>0.85</td>
+<td>2682159.95</td>
+<td>1837999.65</td>
+<td>524430.47</td>
+<td>64225.78</td>
+<td>255504.05</td>
+<td>215571.80</td>
+<td>36981.72</td>
+<td>2950.53</td>
+<td>conventional</td>
+<td>2015</td>
+<td>Los Angeles</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">45</th>
+<td>2015-01-04</td>
+<td>1.25</td>
+<td>54495.54</td>
+<td>47721.51</td>
+<td>1723.40</td>
+<td>0.00</td>
+<td>5050.63</td>
+<td>5050.63</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>organic</td>
+<td>2015</td>
+<td>Los Angeles</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">80</th>
+<td>2015-01-04</td>
+<td>1.05</td>
+<td>430138.88</td>
+<td>110693.69</td>
+<td>270107.61</td>
+<td>9737.50</td>
+<td>39600.08</td>
+<td>39600.08</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>conventional</td>
+<td>2015</td>
+<td>Sacramento</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">81</th>
+<td>2015-01-04</td>
+<td>1.33</td>
+<td>9213.49</td>
+<td>3727.52</td>
+<td>4327.52</td>
+<td>0.00</td>
+<td>1158.45</td>
+<td>1158.45</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>organic</td>
+<td>2015</td>
+<td>Sacramento</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">82</th>
+<td>2015-01-04</td>
+<td>0.94</td>
+<td>461607.33</td>
+<td>244152.26</td>
+<td>165299.33</td>
+<td>15302.75</td>
+<td>36852.99</td>
+<td>30884.29</td>
+<td>5595.00</td>
+<td>373.70</td>
+<td>conventional</td>
+<td>2015</td>
+<td>San Diego</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">...</th>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">33018</th>
+<td>2020-11-29</td>
+<td>1.43</td>
+<td>23531.38</td>
+<td>3303.69</td>
+<td>2057.03</td>
+<td>0.00</td>
+<td>18170.66</td>
+<td>18144.54</td>
+<td>26.12</td>
+<td>0.00</td>
+<td>organic</td>
+<td>2020</td>
+<td>Sacramento</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">33019</th>
+<td>2020-11-29</td>
+<td>1.12</td>
+<td>469356.72</td>
+<td>104509.99</td>
+<td>19988.45</td>
+<td>7210.47</td>
+<td>337647.81</td>
+<td>189341.36</td>
+<td>127701.64</td>
+<td>20604.81</td>
+<td>conventional</td>
+<td>2020</td>
+<td>San Diego</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">33020</th>
+<td>2020-11-29</td>
+<td>1.95</td>
+<td>25799.95</td>
+<td>894.63</td>
+<td>838.11</td>
+<td>0.00</td>
+<td>24067.21</td>
+<td>9691.46</td>
+<td>14375.75</td>
+<td>0.00</td>
+<td>organic</td>
+<td>2020</td>
+<td>San Diego</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">33021</th>
+<td>2020-11-29</td>
+<td>1.50</td>
+<td>644141.37</td>
+<td>128555.43</td>
+<td>136718.24</td>
+<td>5597.21</td>
+<td>373270.49</td>
+<td>159276.65</td>
+<td>207760.32</td>
+<td>6233.52</td>
+<td>conventional</td>
+<td>2020</td>
+<td>San Francisco</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">33022</th>
+<td>2020-11-29</td>
+<td>1.87</td>
+<td>59527.02</td>
+<td>2815.23</td>
+<td>4542.30</td>
+<td>0.00</td>
+<td>52169.49</td>
+<td>52034.33</td>
+<td>135.16</td>
+<td>0.00</td>
+<td>organic</td>
+<td>2020</td>
+<td>San Francisco</td>
+</tr>
+</tbody>
+</table>
+
+<p>2448 rows × 13 columns</p>
+</div>
+</div>
+</div>
+</section>
+<section id="in-which-california-regions-is-the-price-of-organic-versus-conventional-avocados-most-different-support-your-answer-with-a-few-summary-statistics-and-a-visualization." class="level2">
+<h2 class="anchored" data-anchor-id="in-which-california-regions-is-the-price-of-organic-versus-conventional-avocados-most-different-support-your-answer-with-a-few-summary-statistics-and-a-visualization.">7) In which California regions is the price of organic versus conventional avocados most different? Support your answer with a few summary statistics AND a visualization.</h2>
+<div id="0a95eb7c" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>price_summary <span class="op">=</span> (</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    avocado_cali.groupby([<span class="st">'geography'</span>, <span class="st">'type'</span>])[<span class="st">'average_price'</span>]</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    .mean()</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    .unstack()  <span class="co"># separate organic/conventional into columns</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>price_summary[<span class="st">'difference'</span>] <span class="op">=</span> <span class="bu">abs</span>(price_summary[<span class="st">'organic'</span>] <span class="op">-</span> price_summary[<span class="st">'conventional'</span>])</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>price_summary <span class="op">=</span> price_summary.sort_values(<span class="st">'difference'</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(price_summary)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>type           conventional   organic  difference
+geography                                        
+San Francisco      1.400490  2.119444    0.718954
+San Diego          1.113856  1.798366    0.684510
+Sacramento         1.295359  1.873856    0.578497
+Los Angeles        1.047124  1.574902    0.527778</code></pre>
+</div>
+</div>
+</section>
+<section id="the-following-plot-shows-for-all-four-california-regions-the-proportion-of-the-average-hass-avocado-sales-that-are-small-large-or-extra-large-conventional-vs.-organic.-recreate-the-plot-you-do-not-have-to-replicate-the-exact-finishing-touches---e.g.-color-theme---but-your-plot-should-resemble-the-content-of-this-plot." class="level2">
+<h2 class="anchored" data-anchor-id="the-following-plot-shows-for-all-four-california-regions-the-proportion-of-the-average-hass-avocado-sales-that-are-small-large-or-extra-large-conventional-vs.-organic.-recreate-the-plot-you-do-not-have-to-replicate-the-exact-finishing-touches---e.g.-color-theme---but-your-plot-should-resemble-the-content-of-this-plot.">8) The following plot shows, for all four California regions, the proportion of the average Hass avocado sales that are small, large, or extra large; conventional vs.&nbsp;organic. Recreate the plot; you do not have to replicate the exact finishing touches - e.g., color, theme - but your plot should resemble the content of this plot.</h2>
+<div id="9458f08c" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>avocado_cali</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">average_price</th>
+<th data-quarto-table-cell-role="th">total_volume</th>
+<th data-quarto-table-cell-role="th">4046</th>
+<th data-quarto-table-cell-role="th">4225</th>
+<th data-quarto-table-cell-role="th">4770</th>
+<th data-quarto-table-cell-role="th">total_bags</th>
+<th data-quarto-table-cell-role="th">small_bags</th>
+<th data-quarto-table-cell-role="th">large_bags</th>
+<th data-quarto-table-cell-role="th">xlarge_bags</th>
+<th data-quarto-table-cell-role="th">type</th>
+<th data-quarto-table-cell-role="th">year</th>
+<th data-quarto-table-cell-role="th">geography</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">44</th>
+<td>2015-01-04</td>
+<td>0.85</td>
+<td>2682159.95</td>
+<td>1837999.65</td>
+<td>524430.47</td>
+<td>64225.78</td>
+<td>255504.05</td>
+<td>215571.80</td>
+<td>36981.72</td>
+<td>2950.53</td>
+<td>conventional</td>
+<td>2015</td>
+<td>Los Angeles</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">45</th>
+<td>2015-01-04</td>
+<td>1.25</td>
+<td>54495.54</td>
+<td>47721.51</td>
+<td>1723.40</td>
+<td>0.00</td>
+<td>5050.63</td>
+<td>5050.63</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>organic</td>
+<td>2015</td>
+<td>Los Angeles</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">80</th>
+<td>2015-01-04</td>
+<td>1.05</td>
+<td>430138.88</td>
+<td>110693.69</td>
+<td>270107.61</td>
+<td>9737.50</td>
+<td>39600.08</td>
+<td>39600.08</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>conventional</td>
+<td>2015</td>
+<td>Sacramento</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">81</th>
+<td>2015-01-04</td>
+<td>1.33</td>
+<td>9213.49</td>
+<td>3727.52</td>
+<td>4327.52</td>
+<td>0.00</td>
+<td>1158.45</td>
+<td>1158.45</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>organic</td>
+<td>2015</td>
+<td>Sacramento</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">82</th>
+<td>2015-01-04</td>
+<td>0.94</td>
+<td>461607.33</td>
+<td>244152.26</td>
+<td>165299.33</td>
+<td>15302.75</td>
+<td>36852.99</td>
+<td>30884.29</td>
+<td>5595.00</td>
+<td>373.70</td>
+<td>conventional</td>
+<td>2015</td>
+<td>San Diego</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">...</th>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">33018</th>
+<td>2020-11-29</td>
+<td>1.43</td>
+<td>23531.38</td>
+<td>3303.69</td>
+<td>2057.03</td>
+<td>0.00</td>
+<td>18170.66</td>
+<td>18144.54</td>
+<td>26.12</td>
+<td>0.00</td>
+<td>organic</td>
+<td>2020</td>
+<td>Sacramento</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">33019</th>
+<td>2020-11-29</td>
+<td>1.12</td>
+<td>469356.72</td>
+<td>104509.99</td>
+<td>19988.45</td>
+<td>7210.47</td>
+<td>337647.81</td>
+<td>189341.36</td>
+<td>127701.64</td>
+<td>20604.81</td>
+<td>conventional</td>
+<td>2020</td>
+<td>San Diego</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">33020</th>
+<td>2020-11-29</td>
+<td>1.95</td>
+<td>25799.95</td>
+<td>894.63</td>
+<td>838.11</td>
+<td>0.00</td>
+<td>24067.21</td>
+<td>9691.46</td>
+<td>14375.75</td>
+<td>0.00</td>
+<td>organic</td>
+<td>2020</td>
+<td>San Diego</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">33021</th>
+<td>2020-11-29</td>
+<td>1.50</td>
+<td>644141.37</td>
+<td>128555.43</td>
+<td>136718.24</td>
+<td>5597.21</td>
+<td>373270.49</td>
+<td>159276.65</td>
+<td>207760.32</td>
+<td>6233.52</td>
+<td>conventional</td>
+<td>2020</td>
+<td>San Francisco</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">33022</th>
+<td>2020-11-29</td>
+<td>1.87</td>
+<td>59527.02</td>
+<td>2815.23</td>
+<td>4542.30</td>
+<td>0.00</td>
+<td>52169.49</td>
+<td>52034.33</td>
+<td>135.16</td>
+<td>0.00</td>
+<td>organic</td>
+<td>2020</td>
+<td>San Francisco</td>
+</tr>
+</tbody>
+</table>
+
+<p>2448 rows × 13 columns</p>
+</div>
+</div>
+</div>
+<div id="4b1d0171" class="cell" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># got help from AI to make size variable</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>avocado_long <span class="op">=</span> avocado_cali.melt(</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    id_vars<span class="op">=</span>[<span class="st">'geography'</span>, <span class="st">'type'</span>, <span class="st">'total_volume'</span>],   <span class="co"># columns to keep</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    value_vars<span class="op">=</span>[<span class="st">'4046'</span>, <span class="st">'4225'</span>, <span class="st">'4770'</span>],  <span class="co"># columns to unpivot</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    var_name<span class="op">=</span><span class="st">'size'</span>,          <span class="co"># new column name for variable</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    value_name<span class="op">=</span><span class="st">'volume'</span>       <span class="co"># new column name for values</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="ec907d00" class="cell" data-execution_count="19">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>avocado_long[<span class="st">"average_price"</span>] <span class="op">=</span> avocado[<span class="st">"average_price"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="871134fb" class="cell" data-execution_count="20">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># got help from AI to make proportions and transformations</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>avocado_long[<span class="st">'proportion'</span>] <span class="op">=</span> avocado_long.groupby([<span class="st">"type"</span>, <span class="st">"geography"</span>])[<span class="st">"volume"</span>].transform(<span class="kw">lambda</span> x: x <span class="op">/</span> x.<span class="bu">sum</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="430a97fa" class="cell" data-execution_count="21">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">#had problems trying to import plotnine looked up other ways to graph with AI</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>avocado_long.rename(columns<span class="op">=</span>{</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'4046'</span>: <span class="st">'Small Hass Avocados'</span>,</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'4225'</span>: <span class="st">'Medium Hass Avocados'</span>,</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'4770'</span>: <span class="st">'Large Hass Avocados'</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>}, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 2 Create a pivot table for plotting</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>avocado_cali_pivot <span class="op">=</span> (</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>    avocado_long.pivot_table(</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>        index<span class="op">=</span>[<span class="st">'type'</span>, <span class="st">'geography'</span>],</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>        columns<span class="op">=</span><span class="st">'size'</span>,</span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>        values<span class="op">=</span><span class="st">'proportion'</span>,</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>        aggfunc<span class="op">=</span><span class="st">'mean'</span></span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>    .fillna(<span class="dv">0</span>)</span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a><span class="co"># 3 Plot stacked bars</span></span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>), sharey<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a>types <span class="op">=</span> avocado_cali_pivot.index.get_level_values(<span class="st">'type'</span>).unique()</span>
+<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> [<span class="st">'#D77A29'</span>, <span class="st">'#4E937A'</span>, <span class="st">'#6C63FF'</span>]  <span class="co"># Small, Large, Xlarge</span></span>
+<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, t <span class="kw">in</span> <span class="bu">zip</span>(axes, types):</span>
+<span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a>    avocado_cali_pivot.loc[t].plot(</span>
+<span id="cb28-28"><a href="#cb28-28" aria-hidden="true" tabindex="-1"></a>        kind<span class="op">=</span><span class="st">'bar'</span>,</span>
+<span id="cb28-29"><a href="#cb28-29" aria-hidden="true" tabindex="-1"></a>        stacked<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb28-30"><a href="#cb28-30" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span>colors,</span>
+<span id="cb28-31"><a href="#cb28-31" aria-hidden="true" tabindex="-1"></a>        ax<span class="op">=</span>ax,</span>
+<span id="cb28-32"><a href="#cb28-32" aria-hidden="true" tabindex="-1"></a>        width<span class="op">=</span><span class="fl">0.8</span></span>
+<span id="cb28-33"><a href="#cb28-33" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb28-34"><a href="#cb28-34" aria-hidden="true" tabindex="-1"></a>    ax.set_title(t, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb28-35"><a href="#cb28-35" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">'Region of California'</span>)</span>
+<span id="cb28-36"><a href="#cb28-36" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">'Proportion'</span>)</span>
+<span id="cb28-37"><a href="#cb28-37" aria-hidden="true" tabindex="-1"></a>    ax.legend(title<span class="op">=</span><span class="st">'size'</span>, bbox_to_anchor<span class="op">=</span>(<span class="fl">1.02</span>, <span class="dv">1</span>), loc<span class="op">=</span><span class="st">'upper left'</span>)</span>
+<span id="cb28-38"><a href="#cb28-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-39"><a href="#cb28-39" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">'Proportion of Average Hass Avocado Sales by Size'</span>, fontsize<span class="op">=</span><span class="dv">14</span>)</span>
+<span id="cb28-40"><a href="#cb28-40" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb28-41"><a href="#cb28-41" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Lab2_files/figure-html/cell-22-output-1.png" width="949" height="568" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>#Had some problems trying to do this last part I will come into office hours to try and figure it out.</p>
+<div id="b7d8c065" class="cell" data-execution_count="22">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>metro <span class="op">=</span> pd.read_csv(<span class="st">"metro_sales.csv"</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>metro_clean <span class="op">=</span> metro[metro[<span class="st">"StateName"</span>] <span class="op">==</span> <span class="st">"CA"</span>]</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>metro_clean</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="22">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">RegionID</th>
+<th data-quarto-table-cell-role="th">SizeRank</th>
+<th data-quarto-table-cell-role="th">RegionName</th>
+<th data-quarto-table-cell-role="th">RegionType</th>
+<th data-quarto-table-cell-role="th">StateName</th>
+<th data-quarto-table-cell-role="th">2/29/2008</th>
+<th data-quarto-table-cell-role="th">3/31/2008</th>
+<th data-quarto-table-cell-role="th">4/30/2008</th>
+<th data-quarto-table-cell-role="th">5/31/2008</th>
+<th data-quarto-table-cell-role="th">6/30/2008</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">11/30/2024</th>
+<th data-quarto-table-cell-role="th">12/31/2024</th>
+<th data-quarto-table-cell-role="th">1/31/2025</th>
+<th data-quarto-table-cell-role="th">2/28/2025</th>
+<th data-quarto-table-cell-role="th">3/31/2025</th>
+<th data-quarto-table-cell-role="th">4/30/2025</th>
+<th data-quarto-table-cell-role="th">5/31/2025</th>
+<th data-quarto-table-cell-role="th">6/30/2025</th>
+<th data-quarto-table-cell-role="th">7/31/2025</th>
+<th data-quarto-table-cell-role="th">8/31/2025</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>753899</td>
+<td>2</td>
+<td>Los Angeles, CA</td>
+<td>msa</td>
+<td>CA</td>
+<td>4133</td>
+<td>5052</td>
+<td>6084</td>
+<td>6870</td>
+<td>7215</td>
+<td>...</td>
+<td>5712</td>
+<td>6000</td>
+<td>4605</td>
+<td>5274</td>
+<td>6234</td>
+<td>7012</td>
+<td>6685</td>
+<td>6589</td>
+<td>6934</td>
+<td>6476</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">12</th>
+<td>395057</td>
+<td>12</td>
+<td>San Francisco, CA</td>
+<td>msa</td>
+<td>CA</td>
+<td>1910</td>
+<td>2511</td>
+<td>3078</td>
+<td>3393</td>
+<td>3541</td>
+<td>...</td>
+<td>2745</td>
+<td>2453</td>
+<td>1724</td>
+<td>2260</td>
+<td>3035</td>
+<td>3234</td>
+<td>3272</td>
+<td>3272</td>
+<td>3105</td>
+<td>2859</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">13</th>
+<td>395025</td>
+<td>13</td>
+<td>Riverside, CA</td>
+<td>msa</td>
+<td>CA</td>
+<td>2586</td>
+<td>3383</td>
+<td>3888</td>
+<td>4717</td>
+<td>4960</td>
+<td>...</td>
+<td>3055</td>
+<td>3324</td>
+<td>2923</td>
+<td>3106</td>
+<td>3741</td>
+<td>4025</td>
+<td>3917</td>
+<td>3698</td>
+<td>3909</td>
+<td>3536</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">17</th>
+<td>395056</td>
+<td>17</td>
+<td>San Diego, CA</td>
+<td>msa</td>
+<td>CA</td>
+<td>1461</td>
+<td>1668</td>
+<td>2272</td>
+<td>2619</td>
+<td>2559</td>
+<td>...</td>
+<td>1914</td>
+<td>1924</td>
+<td>1639</td>
+<td>1821</td>
+<td>2075</td>
+<td>2465</td>
+<td>2282</td>
+<td>2236</td>
+<td>2248</td>
+<td>2234</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">26</th>
+<td>395045</td>
+<td>26</td>
+<td>Sacramento, CA</td>
+<td>msa</td>
+<td>CA</td>
+<td>1508</td>
+<td>1841</td>
+<td>2366</td>
+<td>2726</td>
+<td>3013</td>
+<td>...</td>
+<td>1712</td>
+<td>1730</td>
+<td>1416</td>
+<td>1550</td>
+<td>1840</td>
+<td>2118</td>
+<td>2112</td>
+<td>2015</td>
+<td>2151</td>
+<td>2081</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">35</th>
+<td>395059</td>
+<td>36</td>
+<td>San Jose, CA</td>
+<td>msa</td>
+<td>CA</td>
+<td>722</td>
+<td>911</td>
+<td>1074</td>
+<td>1256</td>
+<td>1369</td>
+<td>...</td>
+<td>1082</td>
+<td>954</td>
+<td>642</td>
+<td>809</td>
+<td>1127</td>
+<td>1309</td>
+<td>1190</td>
+<td>1244</td>
+<td>1126</td>
+<td>1105</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">56</th>
+<td>394619</td>
+<td>57</td>
+<td>Fresno, CA</td>
+<td>msa</td>
+<td>CA</td>
+<td>323</td>
+<td>401</td>
+<td>513</td>
+<td>551</td>
+<td>601</td>
+<td>...</td>
+<td>564</td>
+<td>542</td>
+<td>495</td>
+<td>482</td>
+<td>560</td>
+<td>704</td>
+<td>671</td>
+<td>667</td>
+<td>711</td>
+<td>690</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">62</th>
+<td>394357</td>
+<td>63</td>
+<td>Bakersfield, CA</td>
+<td>msa</td>
+<td>CA</td>
+<td>439</td>
+<td>511</td>
+<td>624</td>
+<td>723</td>
+<td>771</td>
+<td>...</td>
+<td>602</td>
+<td>551</td>
+<td>520</td>
+<td>571</td>
+<td>668</td>
+<td>692</td>
+<td>775</td>
+<td>705</td>
+<td>755</td>
+<td>702</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">70</th>
+<td>394952</td>
+<td>71</td>
+<td>Oxnard, CA</td>
+<td>msa</td>
+<td>CA</td>
+<td>390</td>
+<td>424</td>
+<td>621</td>
+<td>590</td>
+<td>651</td>
+<td>...</td>
+<td>463</td>
+<td>468</td>
+<td>399</td>
+<td>411</td>
+<td>591</td>
+<td>584</td>
+<td>604</td>
+<td>603</td>
+<td>644</td>
+<td>636</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">75</th>
+<td>395134</td>
+<td>77</td>
+<td>Stockton, CA</td>
+<td>msa</td>
+<td>CA</td>
+<td>407</td>
+<td>542</td>
+<td>728</td>
+<td>871</td>
+<td>1021</td>
+<td>...</td>
+<td>445</td>
+<td>462</td>
+<td>415</td>
+<td>420</td>
+<td>484</td>
+<td>512</td>
+<td>542</td>
+<td>524</td>
+<td>488</td>
+<td>473</td>
+</tr>
+</tbody>
+</table>
+
+<p>10 rows × 216 columns</p>
+</div>
+</div>
+</div>
+<div id="c432760e" class="cell" data-execution_count="23">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>metro_cleanii <span class="op">=</span> metro_clean[metro_clean[<span class="st">"RegionName"</span>].isin([</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Los Angeles, CA"</span>, <span class="st">"San Francisco, CA"</span>, <span class="st">"San Diego, CA"</span>, <span class="st">"Sacramento, CA"</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>])]</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>metro_cleanii</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="23">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">RegionID</th>
+<th data-quarto-table-cell-role="th">SizeRank</th>
+<th data-quarto-table-cell-role="th">RegionName</th>
+<th data-quarto-table-cell-role="th">RegionType</th>
+<th data-quarto-table-cell-role="th">StateName</th>
+<th data-quarto-table-cell-role="th">2/29/2008</th>
+<th data-quarto-table-cell-role="th">3/31/2008</th>
+<th data-quarto-table-cell-role="th">4/30/2008</th>
+<th data-quarto-table-cell-role="th">5/31/2008</th>
+<th data-quarto-table-cell-role="th">6/30/2008</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">11/30/2024</th>
+<th data-quarto-table-cell-role="th">12/31/2024</th>
+<th data-quarto-table-cell-role="th">1/31/2025</th>
+<th data-quarto-table-cell-role="th">2/28/2025</th>
+<th data-quarto-table-cell-role="th">3/31/2025</th>
+<th data-quarto-table-cell-role="th">4/30/2025</th>
+<th data-quarto-table-cell-role="th">5/31/2025</th>
+<th data-quarto-table-cell-role="th">6/30/2025</th>
+<th data-quarto-table-cell-role="th">7/31/2025</th>
+<th data-quarto-table-cell-role="th">8/31/2025</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>753899</td>
+<td>2</td>
+<td>Los Angeles, CA</td>
+<td>msa</td>
+<td>CA</td>
+<td>4133</td>
+<td>5052</td>
+<td>6084</td>
+<td>6870</td>
+<td>7215</td>
+<td>...</td>
+<td>5712</td>
+<td>6000</td>
+<td>4605</td>
+<td>5274</td>
+<td>6234</td>
+<td>7012</td>
+<td>6685</td>
+<td>6589</td>
+<td>6934</td>
+<td>6476</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">12</th>
+<td>395057</td>
+<td>12</td>
+<td>San Francisco, CA</td>
+<td>msa</td>
+<td>CA</td>
+<td>1910</td>
+<td>2511</td>
+<td>3078</td>
+<td>3393</td>
+<td>3541</td>
+<td>...</td>
+<td>2745</td>
+<td>2453</td>
+<td>1724</td>
+<td>2260</td>
+<td>3035</td>
+<td>3234</td>
+<td>3272</td>
+<td>3272</td>
+<td>3105</td>
+<td>2859</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">17</th>
+<td>395056</td>
+<td>17</td>
+<td>San Diego, CA</td>
+<td>msa</td>
+<td>CA</td>
+<td>1461</td>
+<td>1668</td>
+<td>2272</td>
+<td>2619</td>
+<td>2559</td>
+<td>...</td>
+<td>1914</td>
+<td>1924</td>
+<td>1639</td>
+<td>1821</td>
+<td>2075</td>
+<td>2465</td>
+<td>2282</td>
+<td>2236</td>
+<td>2248</td>
+<td>2234</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">26</th>
+<td>395045</td>
+<td>26</td>
+<td>Sacramento, CA</td>
+<td>msa</td>
+<td>CA</td>
+<td>1508</td>
+<td>1841</td>
+<td>2366</td>
+<td>2726</td>
+<td>3013</td>
+<td>...</td>
+<td>1712</td>
+<td>1730</td>
+<td>1416</td>
+<td>1550</td>
+<td>1840</td>
+<td>2118</td>
+<td>2112</td>
+<td>2015</td>
+<td>2151</td>
+<td>2081</td>
+</tr>
+</tbody>
+</table>
+
+<p>4 rows × 216 columns</p>
+</div>
+</div>
+</div>
+<div id="2b211204" class="cell" data-execution_count="24">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>metro_cleanii[<span class="st">"geography"</span>] <span class="op">=</span> metro_cleanii[<span class="st">"RegionName"</span>].<span class="bu">map</span>({</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Los Angeles, CA"</span>: <span class="st">"Los Angeles"</span>,</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"San Francisco, CA"</span>: <span class="st">"San Francisco"</span>,</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"San Diego, CA"</span>: <span class="st">"San Diego"</span>,</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Sacramento, CA"</span>: <span class="st">"Sacramento"</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>C:\Users\piavi\AppData\Local\Temp\ipykernel_33600\2089290849.py:1: SettingWithCopyWarning:
+
+
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+</code></pre>
+</div>
+</div>
+<div id="51f672cd" class="cell" data-execution_count="25">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>avocado_with_summary <span class="op">=</span> pd.merge(avocado_long, metro_cleanii, on<span class="op">=</span><span class="st">'geography'</span>, how<span class="op">=</span><span class="st">'left'</span>)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>avocado_with_summary</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="25">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">geography</th>
+<th data-quarto-table-cell-role="th">type</th>
+<th data-quarto-table-cell-role="th">total_volume</th>
+<th data-quarto-table-cell-role="th">size</th>
+<th data-quarto-table-cell-role="th">volume</th>
+<th data-quarto-table-cell-role="th">average_price</th>
+<th data-quarto-table-cell-role="th">proportion</th>
+<th data-quarto-table-cell-role="th">RegionID</th>
+<th data-quarto-table-cell-role="th">SizeRank</th>
+<th data-quarto-table-cell-role="th">RegionName</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">11/30/2024</th>
+<th data-quarto-table-cell-role="th">12/31/2024</th>
+<th data-quarto-table-cell-role="th">1/31/2025</th>
+<th data-quarto-table-cell-role="th">2/28/2025</th>
+<th data-quarto-table-cell-role="th">3/31/2025</th>
+<th data-quarto-table-cell-role="th">4/30/2025</th>
+<th data-quarto-table-cell-role="th">5/31/2025</th>
+<th data-quarto-table-cell-role="th">6/30/2025</th>
+<th data-quarto-table-cell-role="th">7/31/2025</th>
+<th data-quarto-table-cell-role="th">8/31/2025</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>Los Angeles</td>
+<td>conventional</td>
+<td>2682159.95</td>
+<td>4046</td>
+<td>1837999.65</td>
+<td>1.22</td>
+<td>0.003505</td>
+<td>753899</td>
+<td>2</td>
+<td>Los Angeles, CA</td>
+<td>...</td>
+<td>5712</td>
+<td>6000</td>
+<td>4605</td>
+<td>5274</td>
+<td>6234</td>
+<td>7012</td>
+<td>6685</td>
+<td>6589</td>
+<td>6934</td>
+<td>6476</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>Los Angeles</td>
+<td>organic</td>
+<td>54495.54</td>
+<td>4046</td>
+<td>47721.51</td>
+<td>1.79</td>
+<td>0.004424</td>
+<td>753899</td>
+<td>2</td>
+<td>Los Angeles, CA</td>
+<td>...</td>
+<td>5712</td>
+<td>6000</td>
+<td>4605</td>
+<td>5274</td>
+<td>6234</td>
+<td>7012</td>
+<td>6685</td>
+<td>6589</td>
+<td>6934</td>
+<td>6476</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>Sacramento</td>
+<td>conventional</td>
+<td>430138.88</td>
+<td>4046</td>
+<td>110693.69</td>
+<td>1.00</td>
+<td>0.000926</td>
+<td>395045</td>
+<td>26</td>
+<td>Sacramento, CA</td>
+<td>...</td>
+<td>1712</td>
+<td>1730</td>
+<td>1416</td>
+<td>1550</td>
+<td>1840</td>
+<td>2118</td>
+<td>2112</td>
+<td>2015</td>
+<td>2151</td>
+<td>2081</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>Sacramento</td>
+<td>organic</td>
+<td>9213.49</td>
+<td>4046</td>
+<td>3727.52</td>
+<td>1.76</td>
+<td>0.001718</td>
+<td>395045</td>
+<td>26</td>
+<td>Sacramento, CA</td>
+<td>...</td>
+<td>1712</td>
+<td>1730</td>
+<td>1416</td>
+<td>1550</td>
+<td>1840</td>
+<td>2118</td>
+<td>2112</td>
+<td>2015</td>
+<td>2151</td>
+<td>2081</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>San Diego</td>
+<td>conventional</td>
+<td>461607.33</td>
+<td>4046</td>
+<td>244152.26</td>
+<td>1.08</td>
+<td>0.002479</td>
+<td>395056</td>
+<td>17</td>
+<td>San Diego, CA</td>
+<td>...</td>
+<td>1914</td>
+<td>1924</td>
+<td>1639</td>
+<td>1821</td>
+<td>2075</td>
+<td>2465</td>
+<td>2282</td>
+<td>2236</td>
+<td>2248</td>
+<td>2234</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">...</th>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">7339</th>
+<td>Sacramento</td>
+<td>organic</td>
+<td>23531.38</td>
+<td>4770</td>
+<td>0.00</td>
+<td>0.77</td>
+<td>0.000000</td>
+<td>395045</td>
+<td>26</td>
+<td>Sacramento, CA</td>
+<td>...</td>
+<td>1712</td>
+<td>1730</td>
+<td>1416</td>
+<td>1550</td>
+<td>1840</td>
+<td>2118</td>
+<td>2112</td>
+<td>2015</td>
+<td>2151</td>
+<td>2081</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7340</th>
+<td>San Diego</td>
+<td>conventional</td>
+<td>469356.72</td>
+<td>4770</td>
+<td>7210.47</td>
+<td>1.31</td>
+<td>0.000073</td>
+<td>395056</td>
+<td>17</td>
+<td>San Diego, CA</td>
+<td>...</td>
+<td>1914</td>
+<td>1924</td>
+<td>1639</td>
+<td>1821</td>
+<td>2075</td>
+<td>2465</td>
+<td>2282</td>
+<td>2236</td>
+<td>2248</td>
+<td>2234</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">7341</th>
+<td>San Diego</td>
+<td>organic</td>
+<td>25799.95</td>
+<td>4770</td>
+<td>0.00</td>
+<td>0.73</td>
+<td>0.000000</td>
+<td>395056</td>
+<td>17</td>
+<td>San Diego, CA</td>
+<td>...</td>
+<td>1914</td>
+<td>1924</td>
+<td>1639</td>
+<td>1821</td>
+<td>2075</td>
+<td>2465</td>
+<td>2282</td>
+<td>2236</td>
+<td>2248</td>
+<td>2234</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7342</th>
+<td>San Francisco</td>
+<td>conventional</td>
+<td>644141.37</td>
+<td>4770</td>
+<td>5597.21</td>
+<td>1.36</td>
+<td>0.000027</td>
+<td>395057</td>
+<td>12</td>
+<td>San Francisco, CA</td>
+<td>...</td>
+<td>2745</td>
+<td>2453</td>
+<td>1724</td>
+<td>2260</td>
+<td>3035</td>
+<td>3234</td>
+<td>3272</td>
+<td>3272</td>
+<td>3105</td>
+<td>2859</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">7343</th>
+<td>San Francisco</td>
+<td>organic</td>
+<td>59527.02</td>
+<td>4770</td>
+<td>0.00</td>
+<td>1.18</td>
+<td>0.000000</td>
+<td>395057</td>
+<td>12</td>
+<td>San Francisco, CA</td>
+<td>...</td>
+<td>2745</td>
+<td>2453</td>
+<td>1724</td>
+<td>2260</td>
+<td>3035</td>
+<td>3234</td>
+<td>3272</td>
+<td>3272</td>
+<td>3105</td>
+<td>2859</td>
+</tr>
+</tbody>
+</table>
+
+<p>7344 rows × 223 columns</p>
+</div>
+</div>
+</div>
+<div id="cc7cc4d9" class="cell" data-execution_count="26">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>sns.lmplot(data<span class="op">=</span>avocado_with_summary, x<span class="op">=</span><span class="st">'average_price'</span>, y<span class="op">=</span><span class="st">'2/29/2008'</span>, hue<span class="op">=</span><span class="st">'geography'</span>, aspect<span class="op">=</span><span class="fl">1.3</span>)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Relationship Between Avocado Prices and Housing Prices"</span>)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Avocado Price (USD)"</span>)</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"average home price 2/29/2008"</span>)</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Lab2_files/figure-html/cell-27-output-1.png" width="744" height="488" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="3bae87af" class="cell" data-execution_count="27">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>sns.lmplot(data<span class="op">=</span>avocado_with_summary, x<span class="op">=</span><span class="st">'average_price'</span>, y<span class="op">=</span><span class="st">'8/31/2025'</span>, hue<span class="op">=</span><span class="st">'geography'</span>, aspect<span class="op">=</span><span class="fl">1.3</span>)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"No Relationship Between Avocado Prices and Housing Prices"</span>)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Avocado Price (USD)"</span>)</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"average home price 8/31/2025"</span>)</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Lab2_files/figure-html/cell-28-output-1.png" width="744" height="488" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

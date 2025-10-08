@@ -1,29 +1,105 @@
 ---
-title: Quarto Computations
+title: Lab 1
 echo: false
 fig-height: 3.5
 fig-width: 6
 ---
 
-This dataset contains a subset of the fuel economy data from the EPA.
-
-
-The visualization below shows a positive, strong, and linear relationship between the city and highway mileage of these cars. Additionally, mileage is higher for cars with fewer cylinders.
-
 ```{python}
-1+1
+from plotnine import *
 ```
 
 ```{python}
 import pandas as pd
 
-pd.read_csv("q1data.csv")
+q1 = pd.read_csv("q1data.csv")
+```
+```{python}
+q1 = q1[q1["year"] == 2010]
+q1 = q1.dropna()
+q1
+```
+```{python}
+#Help from AI to find size continuous theme 
+plot = (
+    ggplot(q1, aes(x='income', y='life_exp', color='four_regions', size='population')) +
+    geom_point(alpha=1) +
+    scale_size_continuous(range=[2, 12], guide=guide_legend(title='Population')) +
+    scale_color_brewer(type='qual', palette='Set2') +
+    labs(
+        x='Income',
+        y='Life expectancy'
+    ) +
+    theme_minimal(base_size=12) +
+    theme(
+        figure_size=(10,6),
+        panel_grid_major=element_line(color='#e0e0e0'),
+        legend_position='right'
+    )
+)
+```
+```{python}
+plot
 ```
 
-Hello there.
 
-aoeihtpaoeh
+```{python}
+q2 = pd.read_csv("q2data.csv")
+q2 = q2[q2["year"] == 1997]
+q2 = q2.dropna()
+q2['energy'] = pd.to_numeric(q2['energy'], errors='coerce')
 
-ahpeoja
+```
+```{python}
+plot2 = (
+    ggplot(q2, aes(x='exports', y='imports', color='four_regions', size='energy')) +
+    geom_point(alpha=1) +
+    scale_size_continuous(range=[2, 12], guide=guide_legend(title='Energy')) +
+    scale_x_continuous(limits=(0,220)) +
+    scale_y_continuous(limits=(0,400)) +
+    scale_color_brewer(type='qual', palette='Set2') +
+    labs(
+        x='Exports (\% of GDP)',
+        y='Imports (\% of GDP)'
+    ) +
+    theme_minimal(base_size=12) +
+    theme(
+        figure_size=(10,6),
+        panel_grid_major=element_line(color='#e0e0e0'),
+        legend_position="right"
+    )
+)
+```
+```{python}
+plot2
+```
+```{python}
+q3 = pd.read_csv("q3data.csv")
+q3 = q3[q3["year"] == 2001]
+q3 = q3.dropna()
+q3
+```
 
-
+```{python}
+plot3 = (
+    ggplot(q3, aes(x='internet_users', y='gdp', color='four_regions', size='income')) +
+    geom_point(alpha=1) +
+    scale_size_continuous(range=[2, 12], guide=guide_legend(title='Income')) +
+    scale_x_continuous(limits=(0,90)) +
+    scale_y_continuous(limits=(0,100000)) +
+    scale_color_brewer(type='qual', palette='Set2') +
+    labs(
+        x='Individuals using the Internet',
+        y='GDP/capita'
+    ) +
+    theme_minimal(base_size=12) +
+    theme(
+        figure_size=(10,6),
+        panel_grid_major=element_line(color='#e0e0e0'),
+        legend_position="right"
+    )
+)
+```
+```{python}
+plot3
+```

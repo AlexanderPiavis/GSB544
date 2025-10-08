@@ -1,5 +1,5 @@
 ---
-title: "Lab 2"
+title: "Lab 2 Updated"
 format: html
 ---
 
@@ -201,6 +201,11 @@ avocado_cali
 ```
 
 ## 7) In which California regions is the price of organic versus conventional avocados most different? Support your answer with a few summary statistics AND a visualization.
+
+```{python}
+
+from plotnine import *
+```
 ```{python}
 price_summary = (
     avocado_cali.groupby(['geography', 'type'])['average_price']
@@ -229,57 +234,37 @@ avocado_long = avocado_cali.melt(
 ```
 ```{python}
 avocado_long["average_price"] = avocado["average_price"]
+avocado_long["year"] = avocado["year"]
 ```
 ```{python}
 # got help from AI to make proportions and transformations
 avocado_long['proportion'] = avocado_long.groupby(["type", "geography"])["volume"].transform(lambda x: x / x.sum())
 ```
-
 ```{python}
-#had problems trying to import plotnine looked up other ways to graph with AI
-import matplotlib.pyplot as plt
-avocado_long.rename(columns={
-    '4046': 'Small Hass Avocados',
-    '4225': 'Medium Hass Avocados',
-    '4770': 'Large Hass Avocados'
-}, inplace=True)
-
-# 2 Create a pivot table for plotting
-avocado_cali_pivot = (
-    avocado_long.pivot_table(
-        index=['type', 'geography'],
-        columns='size',
-        values='proportion',
-        aggfunc='mean'
-    )
-    .fillna(0)
-)
-
-# 3 Plot stacked bars
-fig, axes = plt.subplots(1, 2, figsize=(10, 6), sharey=True)
-
-types = avocado_cali_pivot.index.get_level_values('type').unique()
-colors = ['#D77A29', '#4E937A', '#6C63FF']  # Small, Large, Xlarge
-
-for ax, t in zip(axes, types):
-    avocado_cali_pivot.loc[t].plot(
-        kind='bar',
-        stacked=True,
-        color=colors,
-        ax=ax,
-        width=0.8
-    )
-    ax.set_title(t, fontsize=12)
-    ax.set_xlabel('Region of California')
-    ax.set_ylabel('Proportion')
-    ax.legend(title='size', bbox_to_anchor=(1.02, 1), loc='upper left')
-
-fig.suptitle('Proportion of Average Hass Avocado Sales by Size', fontsize=14)
-plt.tight_layout()
-plt.show()
-
+avocado_long["size1"] = avocado_long["size"].map({
+    "4046": "Small",
+    "4225": "Medium",
+    "4770": "Large"
+})
 ```
-
+```{python}
+plot = (ggplot(avocado_long, aes(x="geography", y="proportion", fill="size1")) +
+geom_bar(stat='identity', position='fill', data=avocado_long) +
+facet_wrap('type') +
+scale_y_continuous(labels=lambda l: [f'{v*100:.0f}%' for v in l])+
+labs(
+    title = "Proportion of Average Hass Avocado Sales by Size",
+    x = "Region of California",
+    y = "Proportion"
+)+ 
+theme(
+    axis_text_x=element_text(rotation=45, ha='right')
+)
+)
+```
+```{python}
+plot
+```
 
 #Had some problems trying to do this last part I will come into office hours to try and figure it out.
 ```{python}
@@ -293,32 +278,64 @@ metro_cleanii = metro_clean[metro_clean["RegionName"].isin([
 ])]
 metro_cleanii
 ```
+```{python}
+long_metro_cleanii = metro_cleanii.melt(id_vars=["RegionID","RegionName", "SizeRank", "RegionType", "StateName"], value_name="sales")
+```
 
 ```{python}
-metro_cleanii["geography"] = metro_cleanii["RegionName"].map({
+long_metro_cleanii["date"] = long_metro_cleanii["variable"]
+```
+```{python}
+long_metro_cleanii["date"] = pd.to_datetime(long_metro_cleanii['date'])
+```
+
+```{python}
+long_metro_cleanii["year"] = long_metro_cleanii["date"].dt.year
+```
+
+```{python}
+long_metro_cleaniii = long_metro_cleanii[(long_metro_cleanii["year"] == 2015)| (long_metro_cleanii["year"] == 2016)]
+```
+
+```{python}
+long_metro_cleaniii["geography"] = long_metro_cleaniii["RegionName"].map({
     "Los Angeles, CA": "Los Angeles",
     "San Francisco, CA": "San Francisco",
     "San Diego, CA": "San Diego",
     "Sacramento, CA": "Sacramento"
 })
+long_metro_cleaniii
+```
+```{python}
+avocado_house = avocado_long.merge(long_metro_cleaniii, on=["geography", "year"])
+
 ```
 
 ```{python}
-avocado_with_summary = pd.merge(avocado_long, metro_cleanii, on='geography', how='left')
-avocado_with_summary
+#Used some AI to find how to level up bubble plot
+plot = (
+    ggplot(avocado_house, aes(x='volume', y='sales',
+                       size='total_volume', color='geography')) +
+    geom_point(alpha=0.6) +
+    scale_size_continuous(range=[2,10]) +
+    scale_y_continuous(labels=lambda l: [f'${v/1000:.0f}k' for v in l]) +
+    labs(
+        title='Avocado vs Housing Sold in California',
+        subtitle='Each bubble = a region-year (size = sales volume)',
+        x='Number of avocados sold',
+        y='Houses sold',
+        size='Avocado Sales Volume',
+        color='Region'
+    ) +
+    theme_minimal(base_size=12) +
+    theme(
+        figure_size=(9,6),
+        legend_position='right'
+    )
+)
+
 
 ```
 ```{python}
-sns.lmplot(data=avocado_with_summary, x='average_price', y='2/29/2008', hue='geography', aspect=1.3)
-plt.title("Relationship Between Avocado Prices and Housing Prices")
-plt.xlabel("Avocado Price (USD)")
-plt.ylabel("average home price 2/29/2008")
-plt.show()
-```
-```{python}
-sns.lmplot(data=avocado_with_summary, x='average_price', y='8/31/2025', hue='geography', aspect=1.3)
-plt.title("No Relationship Between Avocado Prices and Housing Prices")
-plt.xlabel("Avocado Price (USD)")
-plt.ylabel("average home price 8/31/2025")
-plt.show()
+plot
 ```

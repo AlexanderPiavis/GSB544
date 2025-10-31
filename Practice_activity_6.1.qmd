@@ -1,0 +1,73 @@
+---
+title: "Practice Activity 6.1"
+format: 
+    html:
+        embed-resources: true
+---
+
+```{python}
+!pip install scikit-learn
+```
+
+```{python}
+import numpy as np
+import pandas as pd
+from plotnine import ggplot, aes, geom_point, geom_line, labs, theme_minimal
+from plotnine import ggplot, geom_point, geom_line, aes
+from sklearn.pipeline import Pipeline
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score
+```
+```{python}
+# Code Here
+!pip install palmerpenguins
+from palmerpenguins import load_penguins
+penguins = load_penguins()
+penguins.head()
+#We would need to dummify species, island, and sex
+```
+```{python}
+penguins = penguins.dropna(subset=["bill_length_mm", "bill_depth_mm"])
+
+X = penguins[["bill_length_mm"]]
+y = penguins["bill_depth_mm"]
+
+x_range = np.linspace(X.min(), X.max(), 300).reshape(-1, 1)
+
+degrees = [1, 2, 3, 10]
+
+pred_df_list = []
+for deg in degrees:
+    model = make_pipeline(PolynomialFeatures(deg), LinearRegression())
+    model.fit(X, y)
+    y_pred = model.predict(x_range)
+    temp = pd.DataFrame({
+        "bill_length_mm": x_range.flatten(),
+        "bill_depth_mm": y_pred,
+        "Model": f"Degree {deg}"
+    })
+    pred_df_list.append(temp)
+
+pred_df = pd.concat(pred_df_list)
+
+p = (
+    ggplot(penguins, aes(x="bill_length_mm", y="bill_depth_mm"))
+    + geom_point(alpha=0.5)
+    + geom_line(pred_df, aes(x="bill_length_mm", y="bill_depth_mm", color="Model"))
+    + labs(
+        title="Predicting Bill Depth from Bill Length",
+        x="Bill Length (mm)",
+        y="Bill Depth (mm)",
+        color="Model"
+    )
+)
+
+p
+```
+# It looks like the model with degree 1 is under-fitted. This is because it doesnt fully show the relationship between bill length and bill depth accurately. 
+
+# It looks like the Model with degree 10 is over-fitted. This is because it captures too much about the data as it containts some of the noise on the outsides of the data. 
+
+# The model that fits the data the best is model 10, it might be over-fitted but it shows the relationship between bill length and bill depth the best.

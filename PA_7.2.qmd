@@ -1,0 +1,111 @@
+---
+title: "PA 7.2"
+format: 
+    html:
+        embed-resources: true
+---
+
+```{python}
+import pandas as pd
+import numpy as np
+from sklearn.pipeline import Pipeline
+from sklearn.compose import make_column_selector, ColumnTransformer
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.linear_model import LinearRegression, Ridge, ElasticNet
+from sklearn.model_selection import cross_val_score
+from plotnine import ggplot, aes, geom_col, labs, theme, element_blank, position_dodge
+from sklearn.model_selection import train_test_split
+from sklearn.model_selection import GridSearchCV
+
+ames = pd.read_csv("AmesHousing.csv")
+good_cols = ames.isna().sum() < 100
+ames = ames.loc[:,good_cols]
+ames = ames.dropna()
+
+X = ames.drop(["SalePrice", "Order", "PID"], axis=1)
+y = ames["SalePrice"]
+X_train, X_test, y_train, y_test = train_test_split(X, y)
+```
+
+```{python}
+ct = ColumnTransformer(
+    [
+        ("dummify",
+         OneHotEncoder(sparse_output=False, handle_unknown='ignore'),
+         make_column_selector(dtype_include=object)),
+        ("standardize",
+         StandardScaler(),
+         make_column_selector(dtype_include=np.number))
+    ],
+    remainder="passthrough"
+)
+
+
+lr_pipeline = Pipeline([
+    ("preprocessing", ct),
+    ("linear_regression", LinearRegression())
+])
+lr_pipeline_fitted = lr_pipeline.fit(X_train, y_train)
+lr_coef = lr_pipeline_fitted.named_steps['linear_regression'].coef_
+
+
+ridge_pipeline = Pipeline([
+    ("preprocessing", ct),
+    ("ridge_regression", Ridge(alpha=10))
+])
+
+param_grid = {"ridge_regression__alpha": [0.0001, 0.001, 0.01, 0.1, 1, 10, 20, 25, 30]}
+
+grid_search = GridSearchCV(
+    ridge_pipeline,
+    param_grid,
+    cv=5,
+    scoring='r2')
+
+grid_search.fit(X, y)
+
+grid_search.best_params_["ridge_regression__alpha"]
+
+ridge_pipeline_fitted = ridge_pipeline.fit(X_train, y_train)
+ridge_coef = ridge_pipeline_fitted.named_steps['ridge_regression'].coef_
+
+elastic_net_pipeline = Pipeline(
+  [("preprocessing", ct),
+  ("elastic_net_regression", ElasticNet(alpha = 1, l1_ratio = 0.2))]
+)
+
+alphas_l1s = {"elastic_net_regression__alpha": [0.0001, 0.001, 0.01, 0.1, 1, 2, 5, 10, 20, 25, 30, 50], "elastic_net_regression__l1_ratio": [0.0001, 0.001, 0.01, 0.1, 0.2, 0.3, 0.5, 1]}
+
+grid_search_elastic_net = GridSearchCV(
+    elastic_net_pipeline,
+    alphas_l1s,
+    cv=5,
+    scoring='r2')
+
+grid_search_elastic_net.fit(X, y)
+print(grid_search_elastic_net.best_params_["elastic_net_regression__alpha"], grid_search_elastic_net.best_params_["elastic_net_regression__l1_ratio"])
+elastic_net_pipeline_fitted = elastic_net_pipeline.fit(X_train, y_train)
+elastic_net_coef = elastic_net_pipeline_fitted.named_steps['elastic_net_regression'].coef_
+
+coefs_df = pd.DataFrame({
+    "OLS": lr_coef,
+    "Ridge": ridge_coef,
+    "Elastic Net": elastic_net_coef
+}).reset_index(names="Feature")
+
+```
+
+
+
+
+
+```{python}
+plot = (
+    ggplot(coefs_df.melt(id_vars="Feature", var_name="Model", value_name="Coefficient")) +
+    geom_col(aes(x="Feature", y="Coefficient", fill="Model"),
+             position=position_dodge(width=0.8)) +
+    labs(x="Feature", y="Coefficient")
+)
+
+plot
+```
